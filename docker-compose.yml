@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  secure.identityserver:
+    image: ${DOCKER_REGISTRY-}identityserver
+    build:
+      context: .
+      dockerfile: src/Secure.IdentityServer/Dockerfile
+
+  securemicroservice.movies.api:
+    image: ${DOCKER_REGISTRY-}securemicroservicemoviesapi
+    build:
+      context: .
+      dockerfile: src/SecureMicroservice.Movies.Api/Dockerfile
+

@@ -1,0 +1,6 @@
+@Secure.IdentityServer_HostAddress = http://localhost:5293
+
+GET {{Secure.IdentityServer_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
