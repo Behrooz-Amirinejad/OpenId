@@ -1,5 +1,6 @@
 using IdentityServer4.Models;
 using IdentityServer4.Test;
+using IdentityServerHost.Quickstart.UI;
 using Secure.IdentityServer;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,10 +14,10 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddIdentityServer()
                 .AddInMemoryClients(Config.Clients)
+                .AddInMemoryApiScopes(Config.ApiScopes)
                 .AddInMemoryIdentityResources(Config.IdentityResources)
                 //.AddInMemoryApiResources(Config.ApiResources)
-                .AddInMemoryApiScopes(Config.ApiScopes)
-                .AddTestUsers(Config.TestUsers) 
+                .AddTestUsers(TestUsers.Users)//Config.TestUsers) 
                 .AddDeveloperSigningCredential();
 
   

@@ -21,14 +21,19 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
 builder.Services.AddAuthentication("Bearer")
                 .AddJwtBearer("Bearer", option =>
                 {
-                    option.Authority = builder.Configuration.GetValue<string>("IdnetiyServerUrl");;
+                    option.Authority = builder.Configuration.GetValue<string>("IdnetiyServerUrl"); ;
 
                     option.TokenValidationParameters = new TokenValidationParameters() { ValidateAudience = false };
                     //option.RequireHttpsMetadata = false;
                 });
 builder.Services.AddAuthorization(opt =>
 {
-    opt.AddPolicy("clientIdPlolicy" , policy => policy.RequireClaim("client_id" , "movieClient"));
+    opt.AddPolicy("clientIdPlolicy",
+                    policy =>
+                            {
+                                policy.RequireClaim("client_id", ["movieClient", "movie_mvc_client"]);
+                            });
+
 });
 
 //Console.WriteLine(builder.Configuration.GetValue<string>("IdnetiyServerUrl"));

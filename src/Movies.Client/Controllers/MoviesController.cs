@@ -41,7 +41,7 @@ namespace Movies.Client.Controllers
             Debug.WriteLine($"identity token: {identityToken}");
             foreach(var claim in User.Claims)
             {
-                Debug.WriteLine($"Claim type: {claim.Type} - Claim value: {claim.Value}");
+               Debug.WriteLine($"Claim type: {claim.Type} - Claim value: {claim.Value}");
             }
         }
 
@@ -189,6 +189,15 @@ namespace Movies.Client.Controllers
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             await HttpContext.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme);
+        }
+
+        [HttpGet]
+        [Authorize(Roles ="manager")]
+        public async Task<IActionResult> Manager()
+        {
+
+            var userInfo = await _movieApiService.GetUserInfo();
+            return View(userInfo);
         }
     }
 }

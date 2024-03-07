@@ -1,0 +1,9 @@
+﻿@SecureMicroservice.Movies.Api_HostAddress = https://localhost:8002
+
+GET {{SecureMicroservice.Movies.Api_HostAddress}}/api/movies/GetMovies
+
+###
+
+GET {{SecureMicroservice.Movies.Api_HostAddress}}/api/calculator
+
+###

@@ -11,21 +11,22 @@ public class Config
     public static IEnumerable<Client> Clients =>
         new Client[]
         {
-            new Client
-            {
-                ClientId = "movieClient",
-                AllowedGrantTypes = GrantTypes.ClientCredentials,
-                ClientSecrets =
-                {
-                    new Secret("secret".Sha256())
-                },
-                AllowedScopes = {"movieAPI"}
-            },
+            //new Client
+            //{
+            //    ClientId = "movieClient",
+            //    AllowedGrantTypes = GrantTypes.ClientCredentials,
+            //    ClientSecrets =
+            //    {
+            //        new Secret("secret".Sha256())
+            //    },
+            //    AllowedScopes = {"movieAPI"}
+            //},
             new Client
             {
                 ClientId = "movie_mvc_client",
                 ClientName = "Movies MVC web App",
-                AllowedGrantTypes = GrantTypes.Code,
+                AllowedGrantTypes = GrantTypes.Hybrid,
+                RequirePkce = false,
                 AllowRememberConsent = false,
                 RedirectUris = new List<string>()
                 {
@@ -42,8 +43,13 @@ public class Config
                 AllowedScopes = new List<string>()
                 {
                     IdentityServerConstants.StandardScopes.OpenId,
-                    IdentityServerConstants.StandardScopes.Profile
-                }
+                    IdentityServerConstants.StandardScopes.Profile,
+                    IdentityServerConstants.StandardScopes.Address,
+                    IdentityServerConstants.StandardScopes.Email,
+                    "movieAPI",
+                    "roles"
+                },
+                AllowAccessTokensViaBrowser = true,
             }
         };
 
@@ -58,7 +64,12 @@ public class Config
         new IdentityResource[]
     {
         new IdentityResources.OpenId(),
-        new IdentityResources.Profile()
+        new IdentityResources.Profile(),
+        new IdentityResources.Address(),
+        new IdentityResources.Email(),
+        new IdentityResource("roles",
+                            "Your roles(s)",
+                            new List<string>(){ "role" })
     };
 
     public static List<TestUser> TestUsers => new List<TestUser>
@@ -72,6 +83,7 @@ public class Config
             {
                 new Claim(JwtClaimTypes.GivenName , "Behrooz"),
                 new Claim(JwtClaimTypes.FamilyName , "Amiri"),
+                new Claim(JwtClaimTypes.Role , "Manager")
             }
         }
     };
